@@ -1,0 +1,29 @@
+[package]
+name = "web-api"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+async-trait = { version = "0.1.87", default-features = false }
+axum = { version = "0.8.1", features = ["macros"] }
+chrono = { version = "0.4.40", default-features = false, features = ["serde"] }
+serde = { version = "1.0.219", default-features = false, features = ["derive"] }
+serde_json = { version = "1.0.140", default-features = false, features = ["std"] }
+sqlx = { version = "0.8.3", default-features = false, features = ["runtime-tokio-native-tls", "chrono", "derive"] }
+tokio = { version = "1.44.0", default-features = false, features = ["macros", "rt-multi-thread"] }
+
+[features]
+default = [ "sqlite" ]
+sqlite = [ "sqlx/sqlite-unbundled" ]
+sqlite-bundled = [ "sqlx/sqlite" ]
+
+[profile.release]
+opt-level = "z"
+debug = false
+lto = true
+strip = true
+codegen-units = 1
+panic = "abort"
+
+# cargo +nightly-2025-02-20 build -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target aarch64-unknown-linux-gnu --release
+# upx --best --lzma ./target/aarch64-unknown-linux-gnu/release/web-api
