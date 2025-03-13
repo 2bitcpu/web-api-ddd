@@ -35,4 +35,9 @@ curl http://localhost:3000/service/contents/find/1
 
 curl -X POST http://localhost:3000/service/auth/signin -H "Content-Type: application/json" -d '{"username":"tester","password":"p@55w0rd"}'
 
+curl -i -X POST \
+  http://localhost:3000/service/contents/post \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzaW1wbGUtand0Iiwic3ViIjoidGVzdGVyIiwiaWF0IjoxNzQxODU3MTIwLCJleHAiOjE3NDE4NjA3MjAsImp0aSI6IjFlZmQxMjkxLTVjMzktNDBjNy1iNjBiLWI2YzBmY2M2MjE2MyJ9.S1Gx6oCAP_fum7nUJSO-TUOJ3s0ZeYv226GwYTWUvfI' \
+  -d '{"title": "example title", "content": "example content"}'
 ```

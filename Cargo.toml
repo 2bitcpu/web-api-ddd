@@ -12,6 +12,9 @@ serde_json = { version = "1.0.140", default-features = false, features = ["std"]
 sqlx = { version = "0.8.3", default-features = false, features = ["runtime-tokio-native-tls", "chrono", "derive"] }
 tokio = { version = "1.44.0", default-features = false, features = ["macros", "rt-multi-thread"] }
 
+simple-jwt = { git = "https://github.com/2bitcpu/simple-jwt" }
+axum-extra = { version = "0.10.0", features = ["typed-header"] }
+
 [features]
 default = [ "sqlite" ]
 sqlite = [ "sqlx/sqlite-unbundled" ]

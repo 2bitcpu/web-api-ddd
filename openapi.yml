@@ -1,0 +1,116 @@
+openapi: "3.0.3"
+info:
+  title: API Title
+  version: "1.0"
+servers:
+  - url: https://localhost:3012/service
+    description: Mock Server
+  - url: https://localhost:3000/service
+    description: Local Server
+paths:
+  /health-check:
+    get:
+      responses:
+        "200":
+          description: OK
+  /auth/signin:
+    post:
+      tags:
+        - auth
+      summary: User sign in
+      description: User sign in
+      requestBody:
+        description: "User credentials"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: tester
+                password:
+                  type: string
+                  example: p@55w0rd
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: aaaaaaaa.bbbbbbbb
+        401:
+          description: Unauthorized
+        400:
+          description: Bad Request
+  /contents/post:
+    post:
+      tags:
+        - contents
+      summary: Post content
+      description: Post content
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: "Content"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: contant title
+                body:
+                  type: string
+                  example: content body
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /contents/list:
+    get:
+      tags:
+        - contents
+      summary: List contents
+      description: List contents
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    title:
+                      type: string
+                      example: content title
+                    body:
+                      type: string
+                      example: content body
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Credentials or access token for API

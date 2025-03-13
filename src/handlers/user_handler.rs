@@ -16,7 +16,7 @@ async fn signin<T: UserService>(
     Json(payload): Json<LoginUserRequest>,
 ) -> impl IntoResponse {
     match state.user_service.signin(payload).await {
-        Ok(user) => (StatusCode::OK, Json(user)).into_response(),
+        Ok(token) => (StatusCode::OK, Json(serde_json::json!({"token": token}))).into_response(),
         Err(err) => (
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(json!({"error": err.to_string()})),

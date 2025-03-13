@@ -26,7 +26,10 @@ impl<T: UserInterface + Send + Sync + Clone> UserService for UserUseCase<T> {
         match user {
             Some(user) => {
                 if user.password == payload.password {
-                    Ok(Some(user.username))
+                    Ok(Some(simple_jwt::encode(&simple_jwt::Claims::new(
+                        &user.username,
+                        3600,
+                    ))?))
                 } else {
                     Ok(None)
                 }
